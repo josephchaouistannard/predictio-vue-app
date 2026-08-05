@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Predictio</string>
+    <string name="title_activity_main">Predictio</string>
+    <string name="package_name">com.josephchaouistannard.predictio</string>
+    <string name="custom_url_scheme">com.josephchaouistannard.predictio</string>
+</resources>

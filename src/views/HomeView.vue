@@ -2,7 +2,10 @@
 import { useGameStore } from '@/stores/gameStore';
 import { usePlayerStore } from '@/stores/playerStore';
 import { GamePhase, type Player } from '@/types/appTypes';
+import { checkForUpdate } from '@/utils/versionCheck';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { AppLauncher } from '@capacitor/app-launcher';
 
 const router = useRouter()
 const ps = usePlayerStore()
@@ -10,6 +13,26 @@ const gs = useGameStore()
 
 async function deleteGameInProgress() {
     await gs.deleteGameInProgress()
+}
+
+const updateAvailable = ref(false)
+onMounted(async () => {
+
+    const currentVersion = __APP_VERSION__
+    console.log('Current version', currentVersion)
+
+    const update = await checkForUpdate(currentVersion)
+
+    if (update.available) {
+        console.log(`New version: ${update.version}`)
+        updateAvailable.value = true
+    }
+})
+
+async function goToGithubReleases() {
+    await AppLauncher.openUrl({
+        url: 'https://github.com/josephchaouistannard/predicito-vue-app/releases/latest',
+    });
 }
 </script>
 
@@ -21,6 +44,9 @@ async function deleteGameInProgress() {
             <div class="header-right">
                 <button class="icon-button" @click="router.push('/players')" aria-label="Edit Players">
                     <span class="material-symbols-outlined">person_edit</span>
+                </button>
+                <button v-if="updateAvailable" class="icon-button" @click="goToGithubReleases" aria-label="Edit Players">
+                    <span class="material-symbols-outlined">upgrade</span>
                 </button>
             </div>
         </header>
@@ -113,10 +139,6 @@ async function deleteGameInProgress() {
     border-bottom: 1px solid #e2e8f0;
     /* Safe-area-inset-top protects content under status bar on iOS/Android */
     padding: calc(12px + env(safe-area-inset-top, 0px)) 16px 12px 16px;
-}
-
-.header-left {
-    /* Balance placeholder for Grid layout */
 }
 
 .app-title {

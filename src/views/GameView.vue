@@ -419,10 +419,6 @@ onMounted(async () => {
     background-color: #f1f5f9;
 }
 
-.header-right-placeholder {
-    /* Balancing slot */
-}
-
 .scroll-content {
     flex: 1;
     overflow-y: auto;

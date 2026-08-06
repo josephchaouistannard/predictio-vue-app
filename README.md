@@ -1,42 +1,48 @@
-# predictio-vue-app
+# Predictio
 
-This template should help get you started developing with Vue 3 in Vite.
+Predictio is a scoring application for the trick-taking card game **Prediction**.
 
-## Recommended IDE Setup
+The app allows players to record games, keep track of scores, view past matches, and see game results over time. It is designed to make scoring easier while keeping a history of games and winners.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Features
 
-## Recommended Browser Setup
+- Record new games and player scores
+- Track game history
+- View previous winners
+- Store data locally on the device
+- Android application built from web technologies
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+## Tech stack
 
-## Type Support for `.vue` Imports in TS
+- [Vue](https://vuejs.org/) — frontend framework
+- [Capacitor](https://capacitorjs.com/) — mobile app packaging and native integration
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+The application is currently local-only and does not require an account or an internet connection.
 
-## Customize configuration
+## Project status
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+Predictio is currently in active development, although the scope of the first version has been intentionally kept focused.
 
-## Project Setup
+Planned improvements include:
 
-```sh
+- More detailed player statistics:
+  - Prediction success rate
+  - Average number of predicted tricks
+  - Player performance over time
+- A self-hosted backend to:
+  - Synchronize data between devices
+  - Share players and games between users
+  - Provide cross-device statistics
+
+## Development
+
+### Prerequisites
+
+- Node.js
+- npm
+- Android Studio (for Android builds)
+
+### Install dependencies
+
+```bash
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```

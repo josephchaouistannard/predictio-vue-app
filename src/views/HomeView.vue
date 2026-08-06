@@ -31,7 +31,7 @@ onMounted(async () => {
 
 async function goToGithubReleases() {
     await AppLauncher.openUrl({
-        url: 'https://github.com/josephchaouistannard/predicito-vue-app/releases/latest',
+        url: 'https://github.com/josephchaouistannard/predictio-vue-app/releases/latest',
     });
 }
 </script>
@@ -45,7 +45,8 @@ async function goToGithubReleases() {
                 <button class="icon-button" @click="router.push('/players')" aria-label="Edit Players">
                     <span class="material-symbols-outlined">person_edit</span>
                 </button>
-                <button v-if="updateAvailable" class="icon-button" @click="goToGithubReleases" aria-label="Edit Players">
+                <button v-if="updateAvailable" class="icon-button" @click="goToGithubReleases"
+                    aria-label="Edit Players">
                     <span class="material-symbols-outlined">upgrade</span>
                 </button>
             </div>

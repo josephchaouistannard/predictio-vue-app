@@ -13,7 +13,7 @@ export async function checkForUpdate(
     currentVersion: string
 ) {
     const res = await fetch(
-        `https://api.github.com/repos/josephchaouistannard/predicito-vue-app/releases/latest`,
+        `https://api.github.com/repos/josephchaouistannard/predictio-vue-app/releases/latest`,
         {
             headers: {
                 Accept: "application/vnd.github+json",

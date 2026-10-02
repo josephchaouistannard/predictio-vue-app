@@ -181,7 +181,7 @@ onMounted(async () => {
 
                     <div class="list-group player-list">
                         <div class="list-item player-item" v-for="res in currentRound?.roundResults"
-                            :key="res.playerId">
+                            :class="{ dealer: res.playPosition === 0 }" :key="res.playerId">
                             <div class="player-info-column">
                                 <div class="player-name">
                                     {{ playersMap.get(res.playerId) }}
@@ -221,7 +221,7 @@ onMounted(async () => {
 
                     <div class="list-group player-list">
                         <div class="list-item player-item" v-for="res in currentRound?.roundResults"
-                            :key="res.playerId">
+                            :class="{ dealer: res.playPosition === 0 }" :key="res.playerId">
                             <div class="player-info-column">
                                 <div class="player-name">
                                     {{ playersMap.get(res.playerId) }}
@@ -516,6 +516,7 @@ onMounted(async () => {
 }
 
 .player-item.dealer {
+    order: 1;
     border-left: 4px solid #f59e0b;
 }
 

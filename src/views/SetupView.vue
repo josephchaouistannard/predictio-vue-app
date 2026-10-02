@@ -113,29 +113,37 @@ watch(maxNbCards, (newMax) => {
 })
 
 /** The number of rounds to be player with current settings */
-const nbRounds = computed(() => 2 * (highestRound.value - lowestRound.value) + 1)
+const nbRounds = computed(() => rounds.value.length)
 
 
 /** Array of RoundSetup objects resulting from the current settings */
 const rounds = computed<RoundSetup[]>(() => {
-    const trumps = trumpOrder
+    const result: RoundSetup[] = []
+    let i = 0
 
-    const rounds: RoundSetup[] = []
-
-    let ascendingRound = lowestRound.value + 1
-    const descendingCount =
-        highestRound.value - lowestRound.value + 1
-
-    for (let i = 0; i < nbRounds.value; i++) {
-        rounds.push({
-            cardsDealt: i < descendingCount
-                ? highestRound.value - i
-                : ascendingRound++,
-            trump: trumps[i % trumps.length]!
+    const addRound = (cardsDealt: number) => {
+        result.push({
+            cardsDealt,
+            trump: trumpOrder[i % trumpOrder.length]!,
         })
+        i++
     }
 
-    return rounds
+    for (let cards = highestRound.value; cards >= lowestRound.value; cards--) {
+        addRound(cards)
+    }
+
+    if (repeatBottomRound.value) {
+        addRound(lowestRound.value)
+    }
+
+    if (!playDownOnly.value) {
+        for (let cards = lowestRound.value + 1; cards <= highestRound.value; cards++) {
+            addRound(cards)
+        }
+    }
+
+    return result
 })
 
 /** true if round settings are valid, false otherwise */
@@ -243,12 +251,14 @@ async function startGame() {
                         </div>
                     </div>
 
-                    <div>
-                        <label>Only play descending rounds
+                    <div class="round-options">
+                        <label class="checkbox-option">
+                            <span>Only play descending rounds</span>
                             <input type="checkbox" v-model="playDownOnly" />
                         </label>
-                        <br>
-                        <label>Repeat lowest round
+
+                        <label class="checkbox-option">
+                            <span>Repeat lowest round</span>
                             <input type="checkbox" v-model="repeatBottomRound" />
                         </label>
                     </div>
@@ -475,6 +485,35 @@ async function startGame() {
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.round-options {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkbox-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    color: #0f172a;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.checkbox-option+.checkbox-option {
+    border-top: 1px solid #f1f5f9;
+}
+
+.checkbox-option input {
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    accent-color: #4f46e5;
+    cursor: pointer;
 }
 
 .round-adjustment-row {

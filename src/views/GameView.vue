@@ -219,6 +219,7 @@ onMounted(async () => {
                         </div>
                     </div>
 
+                    <p class="setup-copy">{{ underOverText }}</p>
                     <div class="list-group player-list">
                         <div class="list-item player-item" v-for="res in currentRound?.roundResults"
                             :class="{ dealer: res.playPosition === 0 }" :key="res.playerId">

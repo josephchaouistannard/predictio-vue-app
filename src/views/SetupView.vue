@@ -74,6 +74,11 @@ const minNbCards = 1
 const highestRound = ref(1)
 /** Lowest chosen number of cards dealt */
 const lowestRound = ref(1)
+/** Only playing down, not back up */
+const playDownOnly = ref(false)
+/** Repeat bottom round */
+const repeatBottomRound = ref(false)
+
 
 function changeCardsDealt(pm: '+' | '-', hl: 'h' | 'l') {
     switch (pm + hl) {
@@ -109,6 +114,7 @@ watch(maxNbCards, (newMax) => {
 
 /** The number of rounds to be player with current settings */
 const nbRounds = computed(() => 2 * (highestRound.value - lowestRound.value) + 1)
+
 
 /** Array of RoundSetup objects resulting from the current settings */
 const rounds = computed<RoundSetup[]>(() => {
@@ -176,13 +182,8 @@ async function startGame() {
                     <!-- Selected List -->
                     <div class="list-card selected-zone">
                         <h3 class="list-title">Selected</h3>
-                        <draggable 
-                            :list="selectedPlayers" 
-                            group="players" 
-                            item-key="id" 
-                            :animation="200"
-                            class="drag-area"
-                        >
+                        <draggable :list="selectedPlayers" group="players" item-key="id" :animation="200"
+                            class="drag-area">
                             <template #item="{ element }">
                                 <div class="player-chip chip-selected">
                                     <span class="drag-indicator">☰</span>
@@ -195,13 +196,8 @@ async function startGame() {
                     <!-- Unselected List -->
                     <div class="list-card unselected-zone">
                         <h3 class="list-title">Available</h3>
-                        <draggable 
-                            :list="unselectedPlayers" 
-                            group="players" 
-                            item-key="id" 
-                            :animation="200"
-                            class="drag-area"
-                        >
+                        <draggable :list="unselectedPlayers" group="players" item-key="id" :animation="200"
+                            class="drag-area">
                             <template #item="{ element }">
                                 <div class="player-chip">
                                     <span class="drag-indicator">☰</span>
@@ -246,6 +242,16 @@ async function startGame() {
                             <button class="counter-btn" @click="changeCardsDealt('+', 'l')">+</button>
                         </div>
                     </div>
+
+                    <div>
+                        <label>Only play descending rounds
+                            <input type="checkbox" v-model="playDownOnly" />
+                        </label>
+                        <br>
+                        <label>Repeat lowest round
+                            <input type="checkbox" v-model="repeatBottomRound" />
+                        </label>
+                    </div>
                 </div>
 
                 <div class="recap-header">
@@ -260,20 +266,12 @@ async function startGame() {
         </main>
 
         <footer class="app-footer">
-            <button 
-                v-if="setupPhase === SetupPhase.Players" 
-                class="btn btn-primary btn-block" 
-                :disabled="!validPlayers"
-                @click="setupPhase = SetupPhase.Rounds"
-            >
+            <button v-if="setupPhase === SetupPhase.Players" class="btn btn-primary btn-block" :disabled="!validPlayers"
+                @click="setupPhase = SetupPhase.Rounds">
                 Next
             </button>
-            <button 
-                v-else 
-                class="btn btn-primary btn-block" 
-                :disabled="!validRounds || !validPlayers"
-                @click="startGame"
-            >
+            <button v-else class="btn btn-primary btn-block" :disabled="!validRounds || !validPlayers"
+                @click="startGame">
                 Start Game
             </button>
         </footer>
@@ -395,7 +393,8 @@ async function startGame() {
 
 /* drag-area matches the draggable component */
 .drag-area {
-    min-height: 250px; /* Crucial so dragging into empty columns works */
+    min-height: 250px;
+    /* Crucial so dragging into empty columns works */
     display: flex;
     flex-direction: column;
     gap: 8px;

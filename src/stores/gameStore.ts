@@ -183,6 +183,11 @@ export const useGameStore = defineStore('gameStore', () => {
         await loadGames()
     }
 
+    async function deletePastGame(id: string) {
+        await deleteGameById(id)
+        await loadGames()
+    }
+
     return {
         initialise,
         games,
@@ -190,5 +195,6 @@ export const useGameStore = defineStore('gameStore', () => {
         startNewGame,
         finaliseRound,
         deleteGameInProgress,
+        deletePastGame,
     }
 })

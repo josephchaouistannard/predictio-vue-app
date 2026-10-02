@@ -15,6 +15,10 @@ async function deleteGameInProgress() {
     await gs.deleteGameInProgress()
 }
 
+async function deletePastGame(id: string) {
+    await gs.deletePastGame(id)
+}
+
 const updateAvailable = ref(false)
 onMounted(async () => {
 
@@ -87,6 +91,10 @@ async function goToGithubReleases() {
                                 <span class="winner-name">
                                     {{ps.players.find((p) => game.players.find((gp) => gp.finalRank === 0)?.playerId
                                         === p.id)?.name || 'N/A'}}
+                                </span>
+                                <span class="material-symbols-outlined icon-button delete-game-button"
+                                @click.stop="deletePastGame(game.id)">
+                                    delete
                                 </span>
                             </div>
                         </div>
@@ -168,6 +176,10 @@ async function goToGithubReleases() {
     align-items: center;
     justify-content: center;
     transition: background-color 0.15s ease;
+}
+
+.delete-game-button {
+    padding: 0;
 }
 
 .icon-button:active {

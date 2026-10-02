@@ -432,6 +432,7 @@ onMounted(async () => {
     gap: 16px;
 }
 
+
 /* ==========================================
    PHASE SECTIONS & CARDS
    ========================================== */
@@ -484,6 +485,14 @@ onMounted(async () => {
 
 .inverted {
     transform: rotate(180deg);
+}
+
+.playingRoundReminder {
+    transform: scale(1.5);
+}
+
+.playingRoundReminder.inverted {
+    transform: rotate(180deg) scale(1.5);
 }
 
 /* ==========================================

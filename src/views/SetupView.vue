@@ -63,6 +63,27 @@ const validPlayers = computed(() => {
     return true
 })
 
+function randomiseDealer() {
+    const dealerIndex = Math.floor(Math.random() * selectedPlayers.value.length)
+    console.log(dealerIndex)
+    const firstSlice = selectedPlayers.value.slice(dealerIndex)
+    const secondSlice = selectedPlayers.value.slice(0, dealerIndex)
+    selectedPlayers.value = [...firstSlice, ...secondSlice]
+}
+
+function randomisePlayerOrder() {
+    let original = [...selectedPlayers.value]
+    const randomised: Player[] = []
+
+    while (original.length !== 0) {
+        const i = Math.floor(Math.random() * original.length)
+        randomised.push(original[i])
+        original = original.filter((_, index) => index !== i)
+    }
+
+    selectedPlayers.value = [...randomised]
+}
+
 // -------------- ROUNDS --------------
 const cardsInDeck = 52
 const maxNbCards = computed(() => {
@@ -219,6 +240,18 @@ async function startGame() {
                 <div class="dealer-info-box">
                     <span class="material-symbols-outlined info-icon">info</span>
                     <p class="info-text">{{ dealerExplanation }}</p>
+                </div>
+
+                <div class="randomise-actions">
+                    <button class="btn btn-secondary randomise-btn" :disabled="selectedPlayers.length <= 1"
+                        @click="randomiseDealer">
+                        Randomise dealer
+                    </button>
+
+                    <button class="btn btn-secondary randomise-btn" :disabled="selectedPlayers.length <= 1"
+                        @click="randomisePlayerOrder">
+                        Randomise player order
+                    </button>
                 </div>
             </section>
 
@@ -649,5 +682,33 @@ async function startGame() {
     color: #94a3b8;
     cursor: not-allowed;
     transform: none;
+}
+
+.randomise-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.btn-secondary {
+    background: #eef2ff;
+    color: #312e81;
+    border: 1px solid #c7d2fe;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+.randomise-btn {
+    min-height: 44px;
+    width: 100%;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.btn-secondary:disabled {
+    background: #e2e8f0;
+    border-color: #cbd5e1;
+    color: #94a3b8;
+    cursor: not-allowed;
+    box-shadow: none;
 }
 </style>

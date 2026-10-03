@@ -266,6 +266,11 @@ onMounted(async () => {
                                     <p class="static-value">{{ res.tricksCalled }}</p>
                                 </div>
                                 <div class="divider-v-sm"></div>
+                                <span class="material-symbols-outlined score-confirm-btn"
+                                    @click="res.tricksWon = res.tricksCalled" aria-label="Use called tricks as won"
+                                    role="button" tabindex="0">
+                                    check_circle
+                                </span>
                                 <div class="player-actions">
                                     <label class="form-label call-label" :for="`won-${res.playerId}`">Won</label>
                                     <input :id="`won-${res.playerId}`" class="form-input call-input" type="number"
@@ -631,6 +636,25 @@ onMounted(async () => {
     background-color: #fffbeb;
     color: #d97706;
     border-color: #fef3c7;
+}
+
+.score-confirm-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: #4f46e5;
+    cursor: pointer;
+    user-select: none;
+    transition:
+        transform 0.15s ease;
+    vertical-align: middle;
+}
+
+.score-confirm-btn:active {
+    transform: scale(0.94);
 }
 
 /* ==========================================

@@ -7,6 +7,7 @@ import { App } from '@capacitor/app';
 import { computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router'
 import RoundParams from '@/components/RoundParams.vue';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
 
 const router = useRouter()
 const route = useRoute()
@@ -14,6 +15,18 @@ const gameId = route.params.gameId
 
 const gs = useGameStore()
 const ps = usePlayerStore()
+
+async function speak(text: string) {
+    await TextToSpeech.speak({
+        text: text,
+        lang: 'en-US',
+        rate: 1.0,
+        pitch: 1.0,
+        volume: 1.0,
+        category: 'ambient',
+        queueStrategy: 1
+    });
+};
 
 const game = computed(() => {
     return gs.games.find((g) => g.id === gameId)

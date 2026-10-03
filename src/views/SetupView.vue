@@ -65,7 +65,6 @@ const validPlayers = computed(() => {
 
 function randomiseDealer() {
     const dealerIndex = Math.floor(Math.random() * selectedPlayers.value.length)
-    console.log(dealerIndex)
     const firstSlice = selectedPlayers.value.slice(dealerIndex)
     const secondSlice = selectedPlayers.value.slice(0, dealerIndex)
     selectedPlayers.value = [...firstSlice, ...secondSlice]
